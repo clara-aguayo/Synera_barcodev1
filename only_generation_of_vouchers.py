@@ -145,17 +145,17 @@ def numero_a_letras(n):
 
 def main():
     if not os.path.exists(CSV_PATH):
-        print(f"❌ ERROR: No se encontró el archivo CSV en: {CSV_PATH}")
+        print(f"ERROR: No se encontró el archivo CSV en: {CSV_PATH}")
         return
     if not os.path.exists(IMAGE_PATH):
-        print(f"❌ ERROR: No se encontró la imagen base en: {IMAGE_PATH}")
+        print(f"ERROR: No se encontró la imagen base en: {IMAGE_PATH}")
         return
 
     df = pd.read_csv(CSV_PATH, sep=';')
     df.columns = [c.strip() for c in df.columns]
     print("Columnas encontradas en CSV:", df.columns.tolist())
     if COLUMN_NAME not in df.columns or COLUMN_MONTO not in df.columns:
-        print(f"❌ ERROR: Verifica que '{COLUMN_NAME}' y '{COLUMN_MONTO}' existan en el CSV.")
+        print(f"ERROR: Verifica que '{COLUMN_NAME}' y '{COLUMN_MONTO}' existan en el CSV.")
         return
 
     out_folder = get_desktop_vales_folder()
@@ -163,9 +163,9 @@ def main():
     font_bold = load_font(BOLD_FONT_PATH, FONT_SIZE)
     base_img = Image.open(IMAGE_PATH).convert("RGB")
 
-    print(f"🖼️ Imagen base cargada ({base_img.size[0]}x{base_img.size[1]})")
-    print(f"📋 Total de vales: {len(df)}")
-    print(f"📁 Guardando en: {out_folder}\n")
+    print(f"Imagen base cargada ({base_img.size[0]}x{base_img.size[1]})")
+    print(f"Total de vales: {len(df)}")
+    print(f"Guardando en: {out_folder}\n")
 
     for idx, row in df.iterrows():
         img = base_img.copy()
@@ -220,10 +220,10 @@ def main():
         filename = f"{str(idx+1).zfill(4)}_{num}.jpg"
         img.save(out_folder / filename, quality=95)
         if (idx + 1) % 50 == 0 or idx == len(df) - 1:
-            print(f"  ✅ Generado {idx+1}/{len(df)} → {filename}")
+            print(f"Generado {idx+1}/{len(df)} → {filename}")
 
-    print("\n🎉 ¡Listo! Todas las imágenes se generaron correctamente.")
-    print("📂 Carpeta de salida:", out_folder)
+    print("\n¡Listo! Todas las imágenes se generaron correctamente.")
+    print("Carpeta de salida:", out_folder)
 
 if __name__ == "__main__":
     main()
